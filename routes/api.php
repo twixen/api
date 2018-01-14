@@ -16,5 +16,12 @@ use Illuminate\Http\Request;
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
-//TEST
-Route::get('item/delete/{item}', 'ItemsController@destroy')->name('destroy_item');
+Route::prefix('/')->group(function() {
+    Route::get('get_more_five', 'ItemsController@getMoreFive')->name('get_more_five');
+    Route::get('get_not_available', 'ItemsController@getNotAvailable')->name('get_not_available');
+    Route::get('get_available', 'ItemsController@getAvailable')->name('get_available');
+    Route::post('add', 'ItemsController@add')->name('add');
+    Route::put('edit', 'ItemsController@edit')->name('edit');
+    Route::delete('delete/{item}', 'ItemsController@destroy')->name('delete');
+});
+

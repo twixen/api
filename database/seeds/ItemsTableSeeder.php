@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Database\Seeder;
+use App\Item;
 
 class ItemsTableSeeder extends Seeder {
 
@@ -10,7 +11,7 @@ class ItemsTableSeeder extends Seeder {
      * @return void
      */
     public function run() {
-        DB::table('items')->insert([
+        Item::insert([
             ['id' => 1, 'name' => 'Product 1', 'amount' => 4],
             ['id' => 2, 'name' => 'Product 2', 'amount' => 12],
             ['id' => 3, 'name' => 'Product 5', 'amount' => 0],

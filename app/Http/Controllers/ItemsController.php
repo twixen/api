@@ -7,71 +7,33 @@ use App\Item;
 
 class ItemsController extends Controller {
 
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index() {
-        //
+    public function getAvailable() {
+        return Item::where('amount', '>', '0')->get()->toJson();
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create() {
-        //
+    public function getNotAvailable() {
+        return Item::where('amount', '0')->get()->toJson();
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request) {
-        //
+    public function getMoreFive() {
+        return Item::where('amount', '>', '5')->get()->toJson();
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id) {
-        //
+    public function add() {
+        $inputs = request()->only('name', 'amount');
+        $item = new Item();
+        $item->name = $inputs['name'];
+        $item->amount = $inputs['amount'];
+        $item->save();
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id) {
-        //
+    public function edit($item) {
+        $inputs = request()->only('name', 'amount');
+        $item->name = $inputs['name'];
+        $item->amount = $inputs['amount'];
+        $item->save();
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id) {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function destroy($item) {
         Item::find($item->id)->delete();
     }
