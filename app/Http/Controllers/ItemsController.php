@@ -2,21 +2,25 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use App\Item;
+use Illuminate\Support\Facades\Log;
 
 class ItemsController extends Controller {
 
     public function getAvailable() {
-        return Item::where('amount', '>', '0')->get()->toJson();
+        return Item::where('amount', '>', '0')->get();
     }
 
     public function getNotAvailable() {
-        return Item::where('amount', '0')->get()->toJson();
+        return Item::where('amount', '0')->get();
     }
 
     public function getMoreFive() {
-        return Item::where('amount', '>', '5')->get()->toJson();
+        return Item::where('amount', '>', '5')->get();
+    }
+
+    public function getItem($item) {
+        return Item::find($item->id);
     }
 
     public function add() {
@@ -25,6 +29,7 @@ class ItemsController extends Controller {
         $item->name = $inputs['name'];
         $item->amount = $inputs['amount'];
         $item->save();
+        return response()->json($item, 200);
     }
 
     public function edit($item) {
@@ -32,10 +37,12 @@ class ItemsController extends Controller {
         $item->name = $inputs['name'];
         $item->amount = $inputs['amount'];
         $item->save();
+        return response()->json($item, 200);
     }
 
     public function destroy($item) {
-        Item::find($item->id)->delete();
+        $item->delete();
+        return response()->json(null, 204);
     }
 
 }
