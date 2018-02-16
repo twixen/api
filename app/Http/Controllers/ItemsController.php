@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Http\Controllers;
 
 use App\Item;
@@ -20,7 +19,7 @@ class ItemsController extends Controller {
     }
 
     public function getItem($item) {
-        return Item::find($item->id);
+        return $item;
     }
 
     public function add() {
@@ -44,5 +43,4 @@ class ItemsController extends Controller {
         $item->delete();
         return response()->json(null, 204);
     }
-
 }
